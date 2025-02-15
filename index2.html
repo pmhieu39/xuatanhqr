@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Background with Centered Box</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(270deg, #ff7eb3, #ff758c, #ff6a88, #ff5e8e, #8a2be2, #00ffcc, #ff4500, #32cd32);
+            background-size: 400% 400%;
+            animation: gradientBG 6s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 50% 75%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 50% 25%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .top-box {
+            width: 100%;
+            max-width: 1600px;
+            height: 80px;
+            background-color: black;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .center-box {
+            width: 100%;
+            max-width: 1600px;
+            height: 100px;
+            background-color: white;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .button {
+            width: 70px;
+            height: 70px;
+            background-color: transparent;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            font-size: 26px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .button:hover {
+            transform: scale(1.5) translateY(-20px);
+            background-color: #00ff66;
+            border-radius: 50%;
+            color: white;
+            opacity: 1 !important;
+        }
+
+        .button:hover ~ .top-box::after {
+            content: attr(data-label);
+            display: block;
+            font-size: 32px;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-box" id="topBox"></div>
+        <div class="center-box">
+            <a href="home.html" class="button" onmouseover="showLabel('Home')">🏠</a>
+            <a href="profile.html" class="button" onmouseover="showLabel('Profile')">👤</a>
+            <a href="messages.html" class="button" onmouseover="showLabel('Messages')">💬</a>
+            <a href="camera.html" class="button" onmouseover="showLabel('Camera')">📷</a>
+            <a href="settings.html" class="button" onmouseover="showLabel('Settings')">⚙️</a>
+        </div>
+    </div>
+
+    <script>
+        function showLabel(label) {
+            document.getElementById('topBox').textContent = label;
+        }
+    </script>
+</body>
+</html>
