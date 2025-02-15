@@ -33,19 +33,84 @@
             gap: 20px;
         }
 
+        .toggle-switch {
+            position: absolute;
+            top: 50%;
+            right: -70px;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-switch input {
+            display: none;
+        }
+
+        .toggle-switch label {
+            width: 50px;
+            height: 25px;
+            background: #ccc;
+            border-radius: 25px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .toggle-switch label::before {
+            content: "OFF";
+        }
+
+        .toggle-switch input:checked + label::before {
+            content: "ON";
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .top-box, .center-box {
+            transition: all 0.3s ease;
+        }
+
         .top-box {
             width: 100%;
             max-width: 1600px;
-            height: 80px;
+            height: 120px;
             background-color: black;
             border-radius: 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             font-size: 32px;
             color: white;
             font-weight: bold;
+            position: relative;
+            transition: height 0.3s ease;
+            overflow: hidden;
+        }
+
+        .top-box img {
+            display: none;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .top-box.active {
+            height: 300px;
+        }
+
+        .top-box.active img {
+            display: block;
         }
 
         .center-box {
@@ -63,7 +128,6 @@
             color: #333;
             position: relative;
             z-index: 1;
-            transition: all 0.3s ease;
         }
 
         .button {
@@ -90,27 +154,45 @@
             color: white;
             opacity: 1 !important;
         }
-
-        .button:hover ~ .top-box::after {
-            content: attr(data-label);
-            display: block;
-            font-size: 32px;
-            color: white;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="top-box" id="topBox"></div>
-        <div class="center-box">
-            <a href="home.html" class="button" onmouseover="showLabel('Home')">🏠</a>
-            <a href="profile.html" class="button" onmouseover="showLabel('Profile')">👤</a>
-            <a href="messages.html" class="button" onmouseover="showLabel('Messages')">💬</a>
-            <a href="camera.html" class="button" onmouseover="showLabel('Camera')">📷</a>
-            <a href="settings.html" class="button" onmouseover="showLabel('Settings')">⚙️</a>
+    <div class="toggle-switch">
+        <input type="checkbox" id="toggleAll" checked>
+        <label for="toggleAll"></label>
+    </div>
+    <div class="container" id="mainContainer">
+        <div class="top-box" id="topBox">
+            <img id="topImage" src="" alt="Icon Image">
+            <div id="topLabel"></div>
+        </div>
+        <div class="center-box" id="centerBox">
+            <a href="#" class="button" data-img="home.png" data-label="Home">🏠</a>
+            <a href="#" class="button" data-img="profile.png" data-label="Profile">👤</a>
+            <a href="#" class="button" data-img="messages.png" data-label="Messages">💬</a>
+            <a href="#" class="button" data-img="camera.png" data-label="Camera">📷</a>
+            <a href="#" class="button" data-img="settings.png" data-label="Settings">⚙️</a>
         </div>
     </div>
+    <script>
+        document.querySelectorAll('.button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                document.getElementById('topImage').src = this.getAttribute('data-img');
+                document.getElementById('topLabel').innerText = this.getAttribute('data-label');
+                document.getElementById('topBox').classList.add('active');
+            });
+            button.addEventListener('mouseleave', function() {
+                document.getElementById('topBox').classList.remove('active');
+            });
+        });
+
+        document.getElementById('toggleAll').addEventListener('change', function() {
+            document.getElementById('mainContainer').classList.toggle('hidden', !this.checked);
+        });
+    </script>
+</body>
+</html>
+
 
     <script>
         function showLabel(label) {
